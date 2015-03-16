@@ -7,7 +7,8 @@ UserID bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
 Email varchar(256) NOT NULL,
 UserName varchar(32),
 RegDate datetime,
-Password varchar(32)
+Password varchar(32),
+UNIQUE(Email)
 )CHARACTER SET utf8 collate utf8_turkish_ci;
 
 CREATE TABLE IF NOT EXISTS Comms(
