@@ -4,7 +4,7 @@ USE inspireMe;
 
 CREATE TABLE IF NOT EXISTS Users(
 UserID bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
-Email varchar(256) NOT NULL,
+Email varchar(255) NOT NULL,
 UserName varchar(32),
 RegDate datetime,
 Password varchar(32),
@@ -107,7 +107,7 @@ FOREIGN KEY(UserID)
 	ON UPDATE CASCADE
 	ON DELETE CASCADE,
 FOREIGN KEY(CommentID)
-	REFERENCES Comment(CommentID)
+	REFERENCES Comments(CommentID)
 	ON UPDATE CASCADE
 	ON DELETE CASCADE
 )CHARACTER SET utf8 collate utf8_turkish_ci;
