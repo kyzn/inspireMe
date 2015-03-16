@@ -1,0 +1,112 @@
+CREATE DATABASE IF NOT EXISTS inspireMe
+	CHARACTER SET utf8 collate utf8_turkish_ci;
+USE inspireMe;
+
+CREATE TABLE IF NOT EXISTS Users(
+UserID bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+Email varchar(256) NOT NULL,
+UserName varchar(32),
+RegDate datetime,
+Password varchar(32)
+)CHARACTER SET utf8 collate utf8_turkish_ci;
+
+CREATE TABLE IF NOT EXISTS Comms(
+CommID bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+CommName varchar(32) NOT NULL,
+ShortDesc varchar(256),
+Privacy enum('public','private') NOT NULL,
+CreatedOn datetime NOT NULL
+)CHARACTER SET utf8 collate utf8_turkish_ci;
+
+CREATE TABLE IF NOT EXISTS UsersInComms(
+UserID bigint NOT NULL,
+CommID bigint NOT NULL,
+JoinedOn datetime NOT NULL,
+ValidUntil datetime NOT NULL,
+Role enum('admin','user') NOT NULL,
+PRIMARY KEY(UserID,CommID),
+FOREIGN KEY(UserID)
+	REFERENCES Users(UserID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+FOREIGN KEY(CommID)
+	REFERENCES Comms(CommID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+)CHARACTER SET utf8 collate utf8_turkish_ci;
+
+CREATE TABLE IF NOT EXISTS Posts(
+PostID bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+PostText text NOT NULL,
+PostTitle text NOT NULL,
+UserID bigint NOT NULL,
+CommID bigint NOT NULL,
+CreatedOn datetime NOT NULL,
+IsDeleted BOOL NOT NULL DEFAULT FALSE,
+PrevPostID bigint,
+NextPostID bigint,
+FOREIGN KEY(UserID)
+	REFERENCES Users(UserID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+FOREIGN KEY(CommID)
+	REFERENCES Comms(CommID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+FOREIGN KEY(PrevPostID)
+	REFERENCES Posts(PostID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+FOREIGN KEY(NextPostID)
+	REFERENCES Posts(PostID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+)CHARACTER SET utf8 collate utf8_turkish_ci;
+
+CREATE TABLE IF NOT EXISTS Comments(
+CommentID bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+CommentText text NOT NULL,
+UserID bigint NOT NULL,
+PostID bigint NOT NULL,
+CreatedOn datetime NOT NULL,
+FOREIGN KEY(UserID)
+	REFERENCES Users(UserID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+FOREIGN KEY(PostID)
+	REFERENCES Posts(PostID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+)CHARACTER SET utf8 collate utf8_turkish_ci;
+
+CREATE TABLE IF NOT EXISTS UpvotesForPosts(
+UserID bigint NOT NULL,
+PostID bigint NOT NULL,
+CreatedOn datetime NOT NULL,
+IsDeleted BOOL NOT NULL DEFAULT FALSE,
+PRIMARY KEY(UserID,PostID),
+FOREIGN KEY(UserID)
+	REFERENCES Users(UserID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+FOREIGN KEY(PostID)
+	REFERENCES Posts(PostID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+)CHARACTER SET utf8 collate utf8_turkish_ci;
+
+CREATE TABLE IF NOT EXISTS UpvotesForComments(
+UserID bigint NOT NULL,
+CommentID bigint NOT NULL,
+CreatedOn datetime NOT NULL,
+IsDeleted BOOL NOT NULL DEFAULT FALSE,
+PRIMARY KEY(UserID,CommentID),
+FOREIGN KEY(UserID)
+	REFERENCES Users(UserID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+FOREIGN KEY(CommentID)
+	REFERENCES Comment(CommentID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+)CHARACTER SET utf8 collate utf8_turkish_ci;
