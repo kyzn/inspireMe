@@ -2,7 +2,7 @@
 
  <div class="container">
 
-      <form class="form-signin" method="post" action="login-post.php">
+      <form class="form-signin" method="post" action="login_check.php">
         <h2 class="form-signin-heading">Sign in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>

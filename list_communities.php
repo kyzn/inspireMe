@@ -1,5 +1,5 @@
 <?php include 'header.php';?>
 
-list_communities
+x
 
 <?php include 'footer.php';?>

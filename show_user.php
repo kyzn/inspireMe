@@ -1,5 +1,5 @@
 <?php include 'header.php';?>
 
-show_user
+x
 
 <?php include 'footer.php';?>
