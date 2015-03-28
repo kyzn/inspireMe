@@ -27,7 +27,6 @@ if (!empty($_SESSION['UserID'])){
 </head>
 
 <body>
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -76,17 +75,18 @@ if (!empty($_SESSION['UserID'])){
   //and write your error messages into $_SESSION['AlertRed'];
 
   if (!empty($_SESSION['AlertGreen'])){ ?>
-  
+<div class="container">  
 <div class="alert alert-success alert-dismissible" role="alert"><?php echo $_SESSION['AlertGreen']; ?>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
 </div>
 
   <?php unset($_SESSION['AlertGreen']); }
 
   if (!empty($_SESSION['AlertRed'])) { ?>
-
+<div class="container">
 <div class="alert alert-danger alert-dismissible" role="alert"><?php echo $_SESSION['AlertRed'];?>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
+</div>
 </div>
   <?php unset($_SESSION['AlertRed']); } ?>
