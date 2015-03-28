@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS UsersInComms(
 UserID bigint NOT NULL,
 CommID bigint NOT NULL,
 JoinedOn datetime NOT NULL,
-ValidUntil datetime NOT NULL,
+ValidUntil datetime default NULL,
 Role enum('admin','user') NOT NULL,
 PRIMARY KEY(UserID,CommID),
 FOREIGN KEY(UserID)
