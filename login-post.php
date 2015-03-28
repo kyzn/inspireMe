@@ -1,22 +1,21 @@
 <?php
-session_start();
-$loggedin=true;
-
-if (empty($_SESSION['UserID'])) {
-    $loggedin=false;
-}
+include('header.php');
 
 if($loggedin){
-	echo "Already logged in.";
+	//Already logged in
+	$_SESSION['AlertRed'] = "You're already logged in.";
+	header("location:index.php");
+
 }else{
 
 	// email and password sent from form
-	$LogEmail=$_POST['LogEmailIn'];
-	$LogPassRaw=$_POST['LogPassIn'];
+	$LogEmail=$_POST['inputEmail'];
+	$LogPassRaw=$_POST['inputPassword'];
 	$LogPass=md5($LogPassRaw);
 
 	if(empty($LogEmail) || empty($LogPassRaw)){
-		echo "Don't leave fields blank.";
+			$_SESSION['AlertRed'] = "Don't leave blank fields.";
+			header("location:login.php");
 	}else{
 
 		require_once("config.php"); //Get db credentials
@@ -29,10 +28,12 @@ if($loggedin){
 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
 			$_SESSION['UserID'] = $row['UserID'];
 			$_SESSION['UserName'] = $row['UserName'];
+			$_SESSION['AlertGreen'] = "Successfully logged in!";
 			header("location:index.php");
 	
 		}else {
-			echo "Wrong username or password";
+			$_SESSION['AlertRed'] = "Wrong username or password";
+			header("location:login.php");
 		}
 
 		$db=null;//close connection

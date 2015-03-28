@@ -1,23 +1,22 @@
 <?php
-session_start();
-$loggedin=true;
-
-if (empty($_SESSION['UserID'])) {
-    $loggedin=false;
-}
+include('header.php');
 
 if($loggedin){
-	echo "Already logged in.";
+	//Already logged in
+	$_SESSION['AlertRed'] = "You're already logged in.";
+	header("location:index.php");
+
 }else{
 
 	// email, username and password sent from form
-	$RegEmail=$_POST['RegEmailIn'];
-	$RegUserName=$_POST['RegUserNameIn'];
-	$RegPassRaw=$_POST['RegPassIn'];
+	$RegEmail=$_POST['inputEmail'];
+	$RegUserName=$_POST['inputUsername'];
+	$RegPassRaw=$_POST['inputPassword'];
 	$RegPass=md5($RegPassRaw);
 
 	if(empty($RegEmail) || empty($RegUserName) || empty($RegPassRaw)){
-		echo "Don't leave fields blank.";
+			$_SESSION['AlertRed'] = "Don't leave blank fields.";
+			header("location:register.php");
 	}else{
 
 		require_once("config.php"); //Get db credentials
@@ -29,14 +28,22 @@ if($loggedin){
 		$stmt->execute(array($RegUserName));
 		$numrows2 = $stmt->rowCount();
 
-		if($numrows1>0 || $numrows2>0){
-			echo "Email or username taken.";
-		}else{
+		if($numrows1>0){
+			$_SESSION['AlertRed'] = "E-mail address belongs to some other user. ";
+			header("location:register.php");
+		}if($numrows2>0){
+			$_SESSION['AlertRed'] .= "Username belongs to some other user.";
+			header("location:register.php");
+		}if($numrows1==0 && $numrows2==0){
+		
 			$stmt = $db->prepare("INSERT INTO Users (Email, UserName, RegDate, Password) VALUES (?,?,NOW(),?);");
 			$stmt->execute(array($RegEmail,$RegUserName,$RegPass));
-			echo "Registered.";			
-		}
 
+			$_SESSION['AlertGreen'] = "Successfully registered! You should login now.";
+			header("location:index.php");		
+
+		}
+		
 		$db=null;//close connection
 
 	}
