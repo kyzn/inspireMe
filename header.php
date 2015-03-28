@@ -27,6 +27,7 @@ if (!empty($_SESSION['UserID'])){
 </head>
 
 <body>
+<div class="container">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -66,6 +67,7 @@ if (!empty($_SESSION['UserID'])){
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
+  </div>
 
 </nav>
 
