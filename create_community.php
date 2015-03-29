@@ -16,10 +16,10 @@ if(!$loggedin){
         maxlength=255 placeholder="Description" required>
         <label for="inputPrivacy" class="sr-only">Privacy</label>
         <div class="radio">
- 			<label><input type="radio" name="inputPrivacy" value="public" checked="checked">Public (Anyone can join, anyone can read)</label>
+ 			<label><input type="radio" name="inputPrivacy" value="public" required>Public (Anyone can join, anyone can read)</label>
 		</div>
 		<div class="radio">
-  			<label><input type="radio" name="inputPrivacy" value="private">Private (Approve to join, members can read)</label>
+  			<label><input type="radio" name="inputPrivacy" value="private" required>Private (Approve to join, members can read)</label>
 		</div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
       </form>
