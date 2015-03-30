@@ -6,3 +6,6 @@
 			reserved.</p>
 	</div>
 </footer>
+
+<!-- we still need to close the html file -->
+</body></html>
