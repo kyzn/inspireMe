@@ -49,7 +49,9 @@ if (!empty($_SESSION['UserID'])){
 
       	<?php if($loggedin){?>
 
-        <li><a href="./list_communities.php">Communities</a></li>
+        <li><a href="./list_communities.php">All Communities</a></li>
+        <li><a href="./list_my_communities.php">My Communities</a></li>
+
 		<li><a href="./create_community.php">Create Community</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

@@ -8,7 +8,7 @@ if(!$loggedin){
 ?>
 
 <div class="container">
-      <h2>Communities</h2>
+      <h2>All Communities</h2>
       <p>Click the community name you want to further investigate.</p>                              
       <table class="table table-striped">
         <thead>
