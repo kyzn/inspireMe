@@ -1,3 +1,6 @@
+!! Don't put config.php file here. Place it in the root directory !!
+
+
 Run setup.sql on your local MySql. Database relationship should look like below.
 
 ![](http://i.imgur.com/jARN9vD.png)

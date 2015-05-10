@@ -12,7 +12,7 @@ if (! isset ( $_GET ['user_id'] )) {
 } else {
    $userid = $_GET ['user_id'];
    
-   require_once ("database/config.php"); // Get db credentials
+   require_once ("config.php"); // Get db credentials
    
    $stmt = $db->prepare ( "SELECT * FROM users WHERE UserID=?" );
    $stmt->execute ( array (

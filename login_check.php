@@ -1,5 +1,4 @@
 <?php
-include('header.php');
 
 if($loggedin){
 	//Already logged in
