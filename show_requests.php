@@ -54,5 +54,9 @@ foreach($db->query($query) as $row){
 	<td><a href='./show_requests_approve.php?user_id=".$row['uid']."&comm_id=".$commid."'>Approve</a></td>
 	<td><a href='./show_requests_delete.php?user_id=".$row['uid']."&comm_id=".$commid."'>Delete</a></td>
 	</tr>";
-}}}
+}
+
+echo "</tbody></table>";
+
+}}
 include('footer.php');?>
