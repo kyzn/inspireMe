@@ -6,7 +6,10 @@ CREATE TABLE IF NOT EXISTS Users(
 UserID bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
 Email varchar(255) NOT NULL,
 UserName varchar(32),
-RegDate datetime,
+FullName varchar(128),
+Occupation text,
+RegDate datetime NOT NULL,
+BirthYear int NOT NULL,
 Password varchar(32),
 UNIQUE(Email)
 )CHARACTER SET utf8 collate utf8_turkish_ci;
