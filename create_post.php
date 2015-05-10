@@ -4,34 +4,36 @@ if(!$loggedin){
 	header("location:index.php");
 }
 
-//If user is in zero communities, redirect back to index.
+if (!isset($_GET['comm_id'])) {
+    $_SESSION['AlertRed'] = "No such community can be found.";
+	header("location:index.php");
+}else{
+    $commid=$_GET['comm_id'];
+    $_SESSION['comm_id']=$commid;
+    $userid=$_SESSION['UserID'];
 
-		$stmt=$db->prepare("SELECT C.CommName cname, C.CommID cid 
-			FROM UsersInComms UC, Comms C 
-			WHERE UC.CommID=C.CommID AND UC.UserID=?;");
-		$stmt->execute(array($userid));
+		$stmt=$db->prepare("SELECT C.CommName cname FROM UsersInComms UC, Comms C
+			WHERE C.CommID=? AND UC.CommID=C.CommID AND UC.UserID=?;"); 
+		#will return empty set if user is not in the community
+		#otherwise we will have the commname.
+		$stmt->execute(array($commid,$_SESSION['UserID']));
 		$numrows = $stmt->rowCount();
 
-		if($numrows == 0){ //Match. Successful login
-			$_SESSION['AlertRed'] = "You are in no communities to post yet.";
+		if($numrows == 0){
+			$_SESSION['AlertRed'] = "You are not authorized to post in that community.";
 			header("location:index.php");
 		}else{
+			$row = $stmt->fetch ( PDO::FETCH_ASSOC );
+			$cname=$row['cname'];
 
 			?>
 			<div class="container">
 	     	<form class="form-signin" method="post" action="create_post_check.php">
         	<h2 class="form-signin-heading">Create Post</h2>
 			<?php
-
-			while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-				?>
-				<div class="radio">
- 				<label><input type="radio" name="inputCommunity" 
- 				value="<?php echo $row['cid'];?>" required><?php echo $row['cname'];?>
- 				</label></div>
-				<?php
-			}
-			?>
+			echo "<p> for <a href=\"./show_community.php?comm_id=$commid\">$cname</a></p>";
+		
+		?>
 
         
         <label for="inputTitle" class="sr-only">Post title</label>
@@ -47,4 +49,4 @@ if(!$loggedin){
     </div> <!-- /container -->
 
 
-<?php } include('footer.php');?>
+<?php }} include('footer.php');?>

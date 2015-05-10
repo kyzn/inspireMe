@@ -51,7 +51,6 @@ if (!empty($_SESSION['UserID'])){
 
         <li><a href="./list_communities.php">Communities</a></li>
 		<li><a href="./create_community.php">Create Community</a></li>
-        <li><a href="./create_post.php">Add Post</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="./show_user.php?user_id=<?php echo $userid;?>"><b><?php echo $username;?></b></a></li>

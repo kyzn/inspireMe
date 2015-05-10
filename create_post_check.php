@@ -5,7 +5,8 @@ if(!$loggedin){
 }else{
 
 	// email, username and password sent from form
-	$commid=$_POST['inputCommunity'];
+	$commid=$_SESSION['comm_id'];
+	unset($_SESSION['comm_id']);
 	$posttitle=$_POST['inputTitle'];
 	$posttext=$_POST['inputPost'];
 
