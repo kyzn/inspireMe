@@ -2,8 +2,7 @@
 <footer>
 	<div class="container">
 		<hr />
-		<p class="text-center">Copyright &copy; Yzn & Cmn 2015. All rights
-			reserved.</p>
+		<p class="text-center">Spring 2015 CMPE 58A - Bogazici University</p>
 	</div>
 </footer>
 
