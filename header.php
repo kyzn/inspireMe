@@ -1,5 +1,7 @@
 <?php
 session_start(); 
+require_once("config.php"); //Get db credentials
+
 $loggedin=false; 
 $username="";
 $userid=0;

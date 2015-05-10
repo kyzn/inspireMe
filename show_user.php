@@ -11,9 +11,7 @@ if (! isset ( $_GET ['user_id'] )) {
    // header("location:index.php");
 } else {
    $userid = $_GET ['user_id'];
-   
-   require_once ("config.php"); // Get db credentials
-   
+      
    $stmt = $db->prepare ( "SELECT * FROM users WHERE UserID=?" );
    $stmt->execute ( array (
          $userid 

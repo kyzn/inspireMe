@@ -16,8 +16,6 @@ if (!isset($_GET['comm_id']) || !isset($_GET['user_id'])) {
     $ruserid=$_GET['user_id']; //this is different than $userid
 	
 	//Control admin rights
-	require_once("config.php"); //Get db credentials
-
 	$stmt=$db->prepare("SELECT * FROM UsersInComms UC, Comms C WHERE UC.UserID=? AND 
     	UC.CommID=? AND UC.CommID=C.CommID AND C.Privacy='Private' AND UC.Role='admin';");
 	$stmt->execute(array($userid,$commid));

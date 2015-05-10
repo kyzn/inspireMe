@@ -8,3 +8,5 @@
 
 <!-- we still need to close the html file -->
 </body></html>
+<?php $db=null;?>
+

@@ -13,8 +13,6 @@ if (!isset($_GET['comm_id'])) {
     //Now we have the community, we need to check whether user is admin of it.
     //And also community has to be private (so that people can send requests to it)
 	
-	require_once("config.php"); //Get db credentials
-
     $stmt=$db->prepare("SELECT C.CommName as cname FROM UsersInComms UC, Comms C WHERE UC.UserID=? AND 
     	UC.CommID=? AND UC.CommID=C.CommID AND C.Privacy='Private' AND UC.Role='admin';");
 	$stmt->execute(array($userid,$commid));

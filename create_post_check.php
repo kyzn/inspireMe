@@ -14,8 +14,6 @@ if(!$loggedin){
 			header("location:create_post.php");
 	}else{
 
-		require_once("config.php"); //Get db credentials
-
 		$stmt=$db->prepare("INSERT INTO Posts (PostText,PostTitle,UserID,CommID,CreatedOn) VALUES (?,?,?,?,NOW());");
 		$stmt->execute(array($posttext,$posttitle,$userid,$commid));
 		$db=null;//close connection

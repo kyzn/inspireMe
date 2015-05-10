@@ -19,8 +19,6 @@ if($loggedin){
 			header("location:register.php");
 	}else{
 
-		require_once("config.php"); //Get db credentials
-
 		$stmt=$db->prepare("SELECT * FROM Users WHERE Email=?");
 		$stmt->execute(array($RegEmail));
 		$numrows1 = $stmt->rowCount();

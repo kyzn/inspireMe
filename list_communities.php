@@ -33,8 +33,6 @@ There are four possible results:
 4) null, to mean that user does not belong to the community
 a possible fifth state: expired compare UsersInComms.ValidUntil vs NOW()*/
 
-include_once("config.php"); //Get db credentials
-
 $query = "SELECT 
   C.CommName name, 
   C.ShortDesc description, 
@@ -73,7 +71,6 @@ foreach($db->query($query) as $row){
 	</tr>";
 }
 
-$db=null;
 ?>
 </tbody></table></div>
 

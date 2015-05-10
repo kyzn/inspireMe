@@ -11,8 +11,6 @@ if (!isset($_GET['comm_id'])) {
     $commid=$_GET['comm_id'];
     //Check if there is a community with that id
 	
-	require_once("config.php"); //Get db credentials
-
     $stmt=$db->prepare("SELECT * FROM Comms WHERE CommID=?");
 	$stmt->execute(array($commid));
 	$numrows = $stmt->rowCount();

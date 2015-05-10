@@ -2,8 +2,6 @@
 $commid = 1;
 // Check if there is a community with that id
 
-require_once ("config.php"); // Get db credentials
-
 $stmt = $db->prepare ( "SELECT * FROM Comms WHERE CommID=?" );
 $stmt->execute ( array (
       $commid 
@@ -108,7 +106,6 @@ if ($numrows == 0) {
    }
 }
 
-$db = null;
 ?>
 </tbody>
 </table>

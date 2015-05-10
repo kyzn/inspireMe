@@ -6,9 +6,6 @@ if(!$loggedin){
 
 //If user is in zero communities, redirect back to index.
 
-
-require_once("config.php"); //Get db credentials
-
 		$stmt=$db->prepare("SELECT C.CommName cname, C.CommID cid 
 			FROM UsersInComms UC, Comms C 
 			WHERE UC.CommID=C.CommID AND UC.UserID=?;");

@@ -1,4 +1,5 @@
 <?php
+include("header.php");
 
 if($loggedin){
 	//Already logged in
@@ -16,8 +17,6 @@ if($loggedin){
 			$_SESSION['AlertRed'] = "Don't leave blank fields.";
 			header("location:login.php");
 	}else{
-
-		require_once("config.php"); //Get db credentials
 
 		$stmt=$db->prepare("SELECT UserID,UserName FROM Users WHERE Email=? AND Password=?");
 		$stmt->execute(array($LogEmail,$LogPass));

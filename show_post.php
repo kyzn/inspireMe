@@ -12,9 +12,7 @@ if (! isset ( $_GET ['post_id'] )) {
    // header("location:index.php");
 } else {
    $postid = $_GET ['post_id'];
-   
-   require_once ("config.php"); // Get db credentials
-   
+      
    $stmt = $db->prepare ( "SELECT * FROM posts WHERE PostID=?" );
    $stmt->execute ( array (
          $postid 

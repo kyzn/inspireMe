@@ -14,8 +14,6 @@ if(!$loggedin){
 			header("location:create_community.php");
 	}else{
 
-		require_once("config.php"); //Get db credentials
-
 		$stmt=$db->prepare("SELECT * FROM Comms WHERE CommName=?");
 		$stmt->execute(array($CommName));
 		$numrows = $stmt->rowCount();
