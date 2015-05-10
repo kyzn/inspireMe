@@ -14,7 +14,13 @@ if($loggedin){
 	$RegPassRaw=$_POST['inputPassword'];
 	$RegPass=md5($RegPassRaw);
 
-	if(empty($RegEmail) || empty($RegUserName) || empty($RegPassRaw)){
+	$RegFullName=$_POST['inputFullname'];
+	$RegBirthYear=$_POST['inputBirthyear'];
+	$RegOccupation=$_POST['inputOccupation'];
+	
+
+
+	if( empty($RegEmail) || empty($RegUserName) || empty($RegPassRaw) || empty($RegFullName) || empty($RegBirthYear) || empty($RegOccupation) ){
 			$_SESSION['AlertRed'] = "Don't leave blank fields.";
 			header("location:register.php");
 	}else{
@@ -22,6 +28,7 @@ if($loggedin){
 		$stmt=$db->prepare("SELECT * FROM Users WHERE Email=?");
 		$stmt->execute(array($RegEmail));
 		$numrows1 = $stmt->rowCount();
+
 		$stmt=$db->prepare("SELECT * FROM Users WHERE UserName=?");
 		$stmt->execute(array($RegUserName));
 		$numrows2 = $stmt->rowCount();
@@ -33,9 +40,10 @@ if($loggedin){
 			$_SESSION['AlertRed'] .= "Username belongs to some other user.";
 			header("location:register.php");
 		}if($numrows1==0 && $numrows2==0){
+
 		
-			$stmt = $db->prepare("INSERT INTO Users (Email, UserName, RegDate, Password) VALUES (?,?,NOW(),?);");
-			$stmt->execute(array($RegEmail,$RegUserName,$RegPass));
+			$stmt = $db->prepare("INSERT INTO Users (Email, UserName, RegDate, Password, FullName, BirthYear, Occupation) VALUES (?,?,NOW(),?,?,?,?);");
+			$stmt->execute(array($RegEmail,$RegUserName,$RegPass,$RegFullName,$RegBirthYear,$RegOccupation));
 
 			$_SESSION['AlertGreen'] = "Successfully registered! You should login now.";
 			header("location:index.php");		
