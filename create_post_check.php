@@ -22,9 +22,10 @@ if(!$loggedin){
 		$stmt->execute(array($posttext,$posttitle,$userid,$commid));
 		$post_id = $db->lastInsertId();
 
+		#add tags
 		$stmt=$db->prepare("INSERT INTO TagsForPosts (PostID, CreatedOn, Tag) VALUES (?,NOW(),?);");
 		foreach($tags_arr as $tag){
-			$stmt->execute(array(1,$tag));
+			$stmt->execute(array($post_id,$tag));
 		}
 
 		$_SESSION['AlertGreen'] = "Successfully created post $posttitle!";
