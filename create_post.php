@@ -42,6 +42,9 @@ if (!isset($_GET['comm_id'])) {
         <label for="inputPost" class="sr-only">Post</label>
         <textarea rows="5" name="inputPost" class="form-control" 
         maxlength=720 placeholder="Post (max 720 char)" required></textarea>
+        <label for="tags" class="sr-only">Tags</label>
+        <textarea rows="2" name="inputTags" class="form-control" 
+        maxlength=512 placeholder="Tags (seperated by comma)" required></textarea>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
       </form>
