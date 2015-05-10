@@ -10,10 +10,10 @@ if(!$loggedin){
         <h2 class="form-signin-heading">Create Community</h2>
         <label for="inputName" class="sr-only">Community name</label>
         <input type="name" name="inputName" class="form-control" 
-        maxlength=32 placeholder="Community name" required autofocus>
+        maxlength=127 placeholder="Community name" required autofocus>
         <label for="inputDesc" class="sr-only">Description</label>
         <input type="name" name="inputDesc" class="form-control" 
-        maxlength=255 placeholder="Description" required>
+        maxlength=1023 placeholder="Description" required>
         <label for="inputPrivacy" class="sr-only">Privacy</label>
         <div class="radio">
  			<label><input type="radio" name="inputPrivacy" value="public" required>Public (Anyone can join, anyone can read)</label>

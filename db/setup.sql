@@ -13,8 +13,8 @@ UNIQUE(Email)
 
 CREATE TABLE IF NOT EXISTS Comms(
 CommID bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
-CommName varchar(32) NOT NULL,
-ShortDesc varchar(256),
+CommName varchar(128) NOT NULL,
+ShortDesc varchar(1024),
 Privacy enum('public','private') NOT NULL,
 CreatedOn datetime NOT NULL
 )CHARACTER SET utf8 collate utf8_turkish_ci;
