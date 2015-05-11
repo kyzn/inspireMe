@@ -257,7 +257,8 @@ if (! isset ( $_GET ['post_id'] )) {
       } else {
          echo "<ul class='list-inline'>";
          foreach ( $db->query ( $query ) as $row ) {
-            echo "<li><a href='#'>" . $row ['tag'] . "</a></li>";
+            echo "<li><a href='./search.php?keyword=". $row ['tag'] ."'>" . $row ['tag'] . "</a></li>";
+            // search #21, searched tag
          }
          echo "</ul>";
       }
