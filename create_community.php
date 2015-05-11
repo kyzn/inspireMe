@@ -15,12 +15,16 @@ if(!$loggedin){
         <input type="name" name="inputDesc" class="form-control" 
         maxlength=1023 placeholder="Description" required>
         <label for="inputPrivacy" class="sr-only">Privacy</label>
+        <label for="tags" class="sr-only">Tags</label>
+        <textarea rows="2" name="inputTags" class="form-control" 
+        maxlength=512 placeholder="Tags (seperated by comma)" required></textarea>
         <div class="radio">
  			<label><input type="radio" name="inputPrivacy" value="public" required>Public (Anyone can join, anyone can read)</label>
 		</div>
 		<div class="radio">
   			<label><input type="radio" name="inputPrivacy" value="private" required>Private (Approve to join, members can read)</label>
 		</div>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
       </form>
 

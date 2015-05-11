@@ -50,9 +50,12 @@ if (!isset($_GET['comm_id'])) {
 		//Handling the buttons (join-joined-request-pending)
 
 		if($admin){
-			echo "<a href='./show_requests.php?comm_id=".$commid."'>Click here to see requests to join</a>";
+			if($private){
+				echo "<a href='./show_requests.php?comm_id=".$commid."'>Click here to see requests to join</a>";
+			}
 		}
 		else if($joined){
+
 			echo "Joined";	
 		}else if(!$private){
 			echo "<a href='./join.php?comm_id=".$commid."'>Click here to join</a>";
@@ -63,6 +66,12 @@ if (!isset($_GET['comm_id'])) {
 		}
 		
 		echo "</i></p>";
+
+		//Link to create new post
+
+		if($joined){
+			echo "<p><a href=\"./create_post.php?comm_id=$commid\">Add Post</a></p>";
+		}
 
 
 
