@@ -212,16 +212,14 @@ if (! isset ( $_GET ['post_id'] )) {
 					<h4>Latest Posts</h4>
 				</div>
 				<ul class="list-group">
-					<li class="list-group-item"><a href="singlepost.html">1. Aries Sun
-							Sign March 21 - April 19</a></li>
-					<li class="list-group-item"><a href="singlepost.html">2. Taurus Sun
-							Sign April 20 - May 20</a></li>
-					<li class="list-group-item"><a href="singlepost.html">3. Gemini Sun
-							Sign May 21 - June 21</a></li>
-					<li class="list-group-item"><a href="singlepost.html">4. Cancer Sun
-							Sign June 22 - July 22</a></li>
-					<li class="list-group-item"><a href="singlepost.html">5. Leo Sun
-							Sign July 23 - August 22 </a></li>
+				  <?php 
+				  $query = "SELECT * FROM posts WHERE CommID=" . $commId . " ORDER BY CreatedOn DESC LIMIT 5;";
+				  foreach ( $db->query ( $query ) as $row ) {
+				     echo "<li class='list-group-item'><a href='./show_post.php?post_id=".$row['PostID']."'>";
+				     echo $row['PostTitle'];
+				     echo "</a></li>";
+				  }
+				  ?>
 				</ul>
 			</div>
 
