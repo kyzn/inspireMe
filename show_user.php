@@ -191,7 +191,6 @@ if ($numrows == 0) {
 						</tbody>
 						</table>
 					</div>
-					<hr>
 					<div class="row">
 						<div class="col-md-4 col-md-offset-4 text-center">
 							<ul class="pagination" id="myPager"></ul>
@@ -219,15 +218,7 @@ if ($numrows == 0) {
       echo "</td></tr>";
    }
    ?>
-						</tbody>
-					</table>
-				</div>
 
-				<hr>
-
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<tbody>
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, C.CreatedOn cdate, U.UserID uid, U.UserName uname
 			                                   FROM Posts P, Users U, Comments C 
@@ -243,15 +234,7 @@ if ($numrows == 0) {
       }
    }
    ?>
-						</tbody>
-					</table>
-				</div>
 
-				<hr>
-
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<tbody>
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, UP.CreatedOn udate
 			                                   FROM Posts P, Upvotesforposts UP
@@ -265,15 +248,7 @@ if ($numrows == 0) {
       echo "</td></tr>";
    }
    ?>
-						</tbody>
-					</table>
-				</div>
-
-				<hr>
-
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<tbody>
+					
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, UP.CreatedOn cdate, U.UserID uid, U.UserName uname
 			                                    FROM Posts P, Users U, Upvotesforposts UP
@@ -287,15 +262,7 @@ if ($numrows == 0) {
       echo "</td></tr>";
    }
    ?>
-						</tbody>
-					</table>
-				</div>
-
-				<hr>
-
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<tbody>
+						
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, UC.CreatedOn udate
 			                                   FROM Posts P, Upvotesforcomments UC, Comments C
@@ -309,15 +276,8 @@ if ($numrows == 0) {
       echo "</td></tr>";
    }
    ?>
-						</tbody>
-					</table>
-				</div>
+						
 
-				<hr>
-
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<tbody>
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, UC.CreatedOn cdate, U.UserID uid, U.UserName uname
 			                                    FROM Posts P, Users U, Upvotesforcomments UC, Comments C
