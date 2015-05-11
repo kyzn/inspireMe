@@ -12,7 +12,7 @@ if (! isset ( $_GET ['post_id'] )) {
    // header("location:index.php");
 } else {
    $postid = $_GET ['post_id'];
-      
+   
    $stmt = $db->prepare ( "SELECT * FROM posts WHERE PostID=?" );
    $stmt->execute ( array (
          $postid 
@@ -52,21 +52,23 @@ if (! isset ( $_GET ['post_id'] )) {
 
 				<div class="row">
 					<div class="col-sm-6 col-md-6">
-						<span class="glyphicon glyphicon-folder-open"></span> &nbsp;<a
-							href="#">Signs</a> &nbsp;&nbsp;<span
-							class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>,
-						<a href="#">Fire</a>, <a href="#">Mars</a>
+						<span class="glyphicon glyphicon-pencil"></span> <a
+							href="show_post.php?post_id=<?php echo "$postid" ?>#comments"><?php echo "$numcomments Comments" ?></a>
+						&nbsp;&nbsp;
 					</div>
 					<div class="col-sm-6 col-md-6">
-						<span class="glyphicon glyphicon-pencil"></span> <a
-							href="show_post.php#comments"><?php echo "$numcomments Comments" ?></a>
-						&nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> <?php echo "$postCreationDate"?>
+					<span style="float: right" class="glyphicon glyphicon-time"> <?php echo "$postCreationDate"?></span>
+<!-- 						<span class="glyphicon glyphicon-folder-open"></span> &nbsp;<a -->
+<!-- 							href="#">Signs</a> &nbsp;&nbsp;<span -->
+<!-- 							class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>, -->
+<!-- 						<a href="#">Fire</a>, <a href="#">Mars</a> -->
 					</div>
 				</div>
 
 				<hr>
 
-				<img src="http://placehold.it/900x300" class="img-responsive"> <br />
+				<!-- 			Issue #16 Add Image or Video Link to the post	                
+                <img src="http://placehold.it/900x300" class="img-responsive"> <br /> -->
 
 				<p class="lead">
 				<?php
@@ -129,10 +131,12 @@ if (! isset ( $_GET ['post_id'] )) {
 			<!-- Comment form -->
 			<div class="well">
 				<h4>Leave a comment</h4>
-				<form role="form" class="clearfix" method="post" action="add_comment_check.php">
+				<form role="form" class="clearfix" method="post"
+					action="add_comment_check.php">
 					<div class="col-md-12 form-group">
 						<label class="sr-only" for="email">Comment</label>
-						<textarea class="form-control" id="comment" name="inputComment" placeholder="Comment"></textarea>
+						<textarea class="form-control" id="comment" name="inputComment"
+							placeholder="Comment"></textarea>
 					</div>
 					<div class="col-md-12 form-group text-right">
 						<button type="submit" class="btn btn-primary">Submit</button>
@@ -163,18 +167,18 @@ if (! isset ( $_GET ['post_id'] )) {
 			</div>
 
 			<!-- Categories -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4>Categories</h4>
-				</div>
-				<ul class="list-group">
-					<li class="list-group-item"><a href="#">Signs</a></li>
-					<li class="list-group-item"><a href="#">Elements</a></li>
-					<li class="list-group-item"><a href="#">Planets</a></li>
-					<li class="list-group-item"><a href="#">Cusps</a></li>
-					<li class="list-group-item"><a href="#">Compatibility</a></li>
-				</ul>
-			</div>
+			<!--  			<div class="panel panel-default"> -->
+			<!-- 				<div class="panel-heading"> -->
+			<!-- 					<h4>Categories</h4> -->
+			<!-- 				</div> -->
+			<!-- 				<ul class="list-group"> -->
+			<!-- 					<li class="list-group-item"><a href="#">Signs</a></li> -->
+			<!-- 					<li class="list-group-item"><a href="#">Elements</a></li> -->
+			<!-- 					<li class="list-group-item"><a href="#">Planets</a></li> -->
+			<!-- 					<li class="list-group-item"><a href="#">Cusps</a></li> -->
+			<!-- 					<li class="list-group-item"><a href="#">Compatibility</a></li> -->
+			<!-- 				</ul> -->
+			<!-- 			</div> -->
 
 			<!-- Tags -->
 			<div class="panel panel-default">

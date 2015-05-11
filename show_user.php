@@ -1,10 +1,10 @@
 <?php
 include 'header.php';
 
-// if (! $loggedin) {
-// $_SESSION ['AlertRed'] = "You have to be logged in to do that.";
-// header ( "location:index.php" );
-// }
+if (! $loggedin) {
+$_SESSION ['AlertRed'] = "You have to be logged in to do that.";
+header ( "location:index.php" );
+}
 
 if (! isset ( $_GET ['user_id'] )) {
    $_SESSION ['AlertRed'] = "No such post can be found.";
