@@ -69,10 +69,10 @@ if ($numrows == 0) {
 		<div class="col-sm-10">
 			<h1><?php echo "$userName"?></h1>
 		</div>
-		<div class="col-sm-2">
+		<!--<div class="col-sm-2">
 			<a href="index.php" class="pull-right"><img title="profile image"
 				class="img-rounded img-responsive" src="im_logo.png"></a>
-		</div>
+		</div>-->
 	</div>
 	<div class="row">
 		<div class="col-sm-3">
