@@ -44,6 +44,21 @@ if($loggedin){
 		
 			$stmt = $db->prepare("INSERT INTO Users (Email, UserName, RegDate, Password, FullName, BirthYear, Occupation) VALUES (?,?,NOW(),?,?,?,?);");
 			$stmt->execute(array($RegEmail,$RegUserName,$RegPass,$RegFullName,$RegBirthYear,$RegOccupation));
+			$user_id = $db->lastInsertId();
+
+			#check if user has any preapproved groups, add if any
+			$preapp_query=$db->prepare("SELECT * FROM PreApproved WHERE Email=?");
+			$preapp_query->execute(array($RegEmail));
+
+			while($preapp_row = $preapp_query->fetch ( PDO::FETCH_ASSOC ) ) {
+				$commid=$preapp_row['CommID'];
+				$preappid=$preapp_row['PreAppID'];
+				$stmt2 = $db->prepare("INSERT INTO UsersInComms (UserID,CommID,JoinedOn,Role) VALUES (?,?,NOW(),'user');");
+				$stmt2->execute(array($user_id,$commid));
+				$stmt3 = $db->prepare("DELETE FROM PreApproved WHERE PreAppID=?");
+				$stmt3->execute(array($preappid));
+
+			}
 
 			$_SESSION['AlertGreen'] = "Successfully registered! You should login now.";
 			header("location:index.php");		

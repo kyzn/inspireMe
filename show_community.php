@@ -95,8 +95,10 @@ if (!isset($_GET['comm_id'])) {
 
 		if($admin){
 			if($private){
-				echo "<a href='./show_requests.php?comm_id=".$commid."'>Click here to see requests to join</a>";
+				echo "<a href='./show_requests.php?comm_id=".$commid."'>Click here to see requests to join</a><br>";
 			}
+				echo "<a href='./preapprove_users.php?comm_id=".$commid."'>Click here to add users to your community</a>";
+
 		}
 		else if($joined){
 

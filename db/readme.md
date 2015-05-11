@@ -3,7 +3,7 @@
 
 Run setup.sql on your local MySql. Database relationship should look like below.
 
-![](http://i.imgur.com/jARN9vD.png)
+![](http://i.imgur.com/oyLOsH2.jpg)
 
 A few notes:
 
