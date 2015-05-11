@@ -117,7 +117,7 @@ if (! isset ( $_GET ['post_id'] )) {
 					<p class='pull-right'>" . $row ['cdate'] . "</p>
                   </div>
                   <div class='panel-heading' style='overflow:
-         hidden; text-overflow: ellipsis; white-space: nowrap;
+         hidden; text-overflow: ellipsis; white-space: wrap;
          '>
         <span>" . $row ['ctext'] . "</span>
                   </div>
