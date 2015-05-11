@@ -2,8 +2,8 @@
 include 'header.php';
 
 if (! $loggedin) {
-$_SESSION ['AlertRed'] = "You have to be logged in to do that.";
-header ( "location:index.php" );
+   $_SESSION ['AlertRed'] = "You have to be logged in to do that.";
+   header ( "location:index.php" );
 }
 
 if (! isset ( $_GET ['user_id'] )) {
@@ -11,7 +11,7 @@ if (! isset ( $_GET ['user_id'] )) {
    // header("location:index.php");
 } else {
    $userid = $_GET ['user_id'];
-      
+   
    $stmt = $db->prepare ( "SELECT * FROM users WHERE UserID=?" );
    $stmt->execute ( array (
          $userid 
@@ -20,13 +20,42 @@ if (! isset ( $_GET ['user_id'] )) {
    
    if ($numrows == 0) {
       $_SESSION ['AlertRed'] = "No such user can be found.";
-      // header ( "location:index.php" );
+      header ( "location:index.php" );
    } else {
       $row = $stmt->fetch ( PDO::FETCH_ASSOC );
       
+      $displayedUserID = $row ['UserID'];
       $userEmail = $row ['Email'];
       $userName = $row ['UserName'];
       $regDate = $row ['RegDate'];
+      
+      // total num of posts
+      $stmt = $db->prepare ( "SELECT * FROM posts WHERE UserID=?" );
+      $stmt->execute ( array (
+            $displayedUserID 
+      ) );
+      $totalnumofposts = $stmt->rowCount ();
+      
+      // total num of comments
+      $stmt = $db->prepare ( "SELECT * FROM comments WHERE UserID=?" );
+      $stmt->execute ( array (
+            $displayedUserID 
+      ) );
+      $totalnumofcomments = $stmt->rowCount ();
+      
+      // total num of upvotes
+      $stmt = $db->prepare ( "SELECT * FROM upvotesforposts WHERE UserID=?" );
+      $stmt->execute ( array (
+            $displayedUserID 
+      ) );
+      $totalnumofupvotes = $stmt->rowCount ();
+      
+      // total num of likes
+      $stmt = $db->prepare ( "SELECT * FROM upvotesforcomments WHERE UserID=?" );
+      $stmt->execute ( array (
+            $displayedUserID 
+      ) );
+      $totalnumoflikes = $stmt->rowCount ();
       
       ?>
 
@@ -49,35 +78,38 @@ if (! isset ( $_GET ['user_id'] )) {
 				<li class="list-group-item text-muted">Profile</li>
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span>
 					<?php echo "$regDate"?></li>
-				<li class="list-group-item text-right"><span class="pull-left"><strong>Last
-							seen</strong></span> Yesterday (?)</li>
-				<li class="list-group-item text-right"><span class="pull-left"><strong>Real
-							name</strong></span> Ibrahim Cimentepe (?)</li>
+				<!-- 				<li class="list-group-item text-right"><span class="pull-left"><strong>Last -->
+				<!-- 							seen</strong></span> Yesterday (?)</li> -->
+				<li class="list-group-item text-right"><span class="pull-left"><strong>Contact</strong></span> 
+				<?php echo "$userEmail"?>
+				</li>
 
 			</ul>
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					Contact <i class="fa fa-link fa-1x"></i>
-				</div>
-				<div class="panel-body">
-					<?php echo "$userEmail"?>
+			<!-- 			<div class="panel panel-default"> -->
+			<!-- 				<div class="panel-heading"> -->
+			<!-- 					Contact <i class="fa fa-link fa-1x"></i> -->
+			<!-- 				</div> -->
+			<!-- 				<div class="panel-body"> -->
+					<?php // echo "$userEmail"?>
 					<!-- a href="E-">bootply.com</a> -->
-				</div>
-			</div>
+			<!-- 				</div> -->
+			<!-- 			</div> -->
 
 
 			<ul class="list-group">
 				<li class="list-group-item text-muted">Activity <i
 					class="fa fa-dashboard fa-1x"></i></li>
-				<li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span>
-					125</li>
+				<!-- 				<li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> -->
+				<!-- 					125</li> -->
+				<li class="list-group-item text-right"><span class="pull-left"><strong>Upvotes</strong></span>
+					<?php echo $totalnumofupvotes ?></li>
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span>
-					13</li>
+					<?php echo $totalnumoflikes ?></li>
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Comments</strong></span>
-					37</li>
-				<li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span>
-					78</li>
+					<?php echo $totalnumofcomments ?></li>
+				<!-- 				<li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> -->
+				<!-- 					78</li> -->
 			</ul>
 
 			<div class="panel panel-default">
@@ -136,7 +168,7 @@ if (! isset ( $_GET ['user_id'] )) {
       		<table class='table table-striped'>
         	<thead>
           	<tr>
-            <th>Posts</th>
+            <th>Posts ($totalnumofposts)</th>
             <th>Date</th>
           	</tr>
         	</thead>
@@ -165,37 +197,136 @@ if (! isset ( $_GET ['user_id'] )) {
 				<!--/table-resp-->
 
 				<hr>
-
 				<h4>Recent Activity</h4>
 
 				<div class="table-responsive">
 					<table class="table table-hover">
-
 						<tbody>
-							<tr>
-								<td><i class="pull-right fa fa-edit"></i> Today, 1:00 - Keanu
-									Reeves liked your post.</td>
-							</tr>
-							<tr>
-								<td><i class="pull-right fa fa-edit"></i> Today, 12:23 - Chloe
-									Grace Moretz liked and shared your post.</td>
-							</tr>
-							<tr>
-								<td><i class="pull-right fa fa-edit"></i> Today, 12:20 - You
-									posted a new blog entry title "Why social media is".</td>
-							</tr>
-							<tr>
-								<td><i class="pull-right fa fa-edit"></i> Yesterday - Uskudarli
-									liked your post.</td>
-							</tr>
-							<tr>
-								<td><i class="pull-right fa fa-edit"></i> 2 Days Ago - Jhonny
-									Depp liked your post.</td>
-							</tr>
-							<tr>
-								<td><i class="pull-right fa fa-edit"></i> 2 Days Ago - Nicole
-									Kidman liked your post.</td>
-							</tr>
+                           <?php
+      $query = "SELECT P.PostID pid, P.PostTitle ptitle, C.CreatedOn cdate 
+                                        FROM Posts P, Comments C 
+                                        WHERE C.UserID=" . $userid . " AND P.PostID=C.PostID 
+                                        ORDER BY C.CreatedOn DESC LIMIT 10;";
+      
+      foreach ( $db->query ( $query ) as $row ) {
+         echo "<tr><td><i class='pull-right fa fa-edit'></i>";
+         echo $row ['cdate'] . " - Commented on the post 
+                                      <a href='./show_post.php?post_id=" . $row ['pid'] . "#comments'>" . $row ['ptitle'] . "</a>";
+         echo "</td></tr>";
+      }
+      ?>
+						</tbody>
+					</table>
+				</div>
+
+				<hr>
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tbody>
+                           <?php
+      $query = "SELECT P.PostID pid, P.PostTitle ptitle, C.CreatedOn cdate, U.UserID uid, U.UserName uname
+			                                   FROM Posts P, Users U, Comments C 
+                                               WHERE P.UserID=" . $userid . " AND P.PostID=C.PostID AND U.UserID=C.UserID
+                                               ORDER BY C.CreatedOn DESC LIMIT 10;";
+      
+      foreach ( $db->query ( $query ) as $row ) {
+         if ($row ['uid'] != $userid) {
+            echo "<tr><td><i class='pull-right fa fa-edit'></i>";
+            echo $row ['cdate'] . " - " . $row ['uname'] . " commented on your post
+                                      <a href='./show_post.php?post_id=" . $row ['pid'] . "#comments'>" . $row ['ptitle'] . "</a>";
+            echo "</td></tr>";
+         }
+      }
+      ?>
+						</tbody>
+					</table>
+				</div>
+
+				<hr>
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tbody>
+                           <?php
+      $query = "SELECT P.PostID pid, P.PostTitle ptitle, UP.CreatedOn udate
+			                                   FROM Posts P, Upvotesforposts UP
+                                               WHERE UP.UserID=" . $userid . " AND P.PostID=UP.PostID AND UP.IsDeleted=0
+                                               ORDER BY UP.CreatedOn DESC LIMIT 10;";
+      
+      foreach ( $db->query ( $query ) as $row ) {
+         echo "<tr><td><i class='pull-right fa fa-edit'></i>";
+         echo $row ['udate'] . " - Upvoted the post
+              <a href='./show_post.php?post_id=" . $row ['pid'] . "'>" . $row ['ptitle'] . "</a>";
+         echo "</td></tr>";
+      }
+      ?>
+						</tbody>
+					</table>
+				</div>
+
+				<hr>
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tbody>
+                           <?php
+      $query = "SELECT P.PostID pid, P.PostTitle ptitle, UP.CreatedOn cdate, U.UserID uid, U.UserName uname
+			                                    FROM Posts P, Users U, Upvotesforposts UP
+                                                WHERE P.UserID=" . $userid . " AND P.PostID=UP.PostID AND U.UserID=UP.UserID
+                                                ORDER BY UP.CreatedOn DESC LIMIT 10;";
+      
+      foreach ( $db->query ( $query ) as $row ) {
+         echo "<tr><td><i class='pull-right fa fa-edit'></i>";
+         echo $row ['cdate'] . " - " . $row ['uname'] . " upvoted your post
+              <a href='./show_post.php?post_id=" . $row ['pid'] . "'>" . $row ['ptitle'] . "</a>";
+         echo "</td></tr>";
+      }
+      ?>
+						</tbody>
+					</table>
+				</div>
+
+				<hr>
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tbody>
+                           <?php
+      $query = "SELECT P.PostID pid, P.PostTitle ptitle, UC.CreatedOn udate
+			                                   FROM Posts P, Upvotesforcomments UC, Comments C
+                                               WHERE UC.UserID=" . $userid . " AND P.PostID=C.PostID AND UC.CommentID=C.CommentID AND UC.IsDeleted=0
+                                               ORDER BY UC.CreatedOn DESC LIMIT 10;";
+      
+      foreach ( $db->query ( $query ) as $row ) {
+         echo "<tr><td><i class='pull-right fa fa-edit'></i>";
+         echo $row ['udate'] . " - Liked the comment in the post 
+              <a href='./show_post.php?post_id=" . $row ['pid'] . "#comments'>" . $row ['ptitle'] . "</a>";
+         echo "</td></tr>";
+      }
+      ?>
+						</tbody>
+					</table>
+				</div>
+
+				<hr>
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tbody>
+                           <?php
+      $query = "SELECT P.PostID pid, P.PostTitle ptitle, UC.CreatedOn cdate, U.UserID uid, U.UserName uname
+			                                    FROM Posts P, Users U, Upvotesforcomments UC, Comments C
+                                                WHERE C.UserID=" . $userid . " AND UC.CommentID=C.CommentID AND U.UserID=UC.UserID AND P.PostID=C.PostID
+				                                ORDER BY UC.CreatedOn DESC";
+      
+      foreach ( $db->query ( $query ) as $row ) {
+         echo "<tr><td><i class='pull-right fa fa-edit'></i>";
+         echo $row ['cdate'] . " - ".$row['uname']." liked your comment in the post 
+              <a href='./show_post.php?post_id=" . $row ['pid'] . "#comments'>" . $row ['ptitle'] . "</a>";
+         echo "</td></tr>";
+      }
+      ?>
 						</tbody>
 					</table>
 				</div>
