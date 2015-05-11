@@ -57,11 +57,11 @@ if (! isset ( $_GET ['post_id'] )) {
 						&nbsp;&nbsp;
 					</div>
 					<div class="col-sm-6 col-md-6">
-					<span style="float: right" class="glyphicon glyphicon-time"> <?php echo "$postCreationDate"?></span>
-<!-- 						<span class="glyphicon glyphicon-folder-open"></span> &nbsp;<a -->
-<!-- 							href="#">Signs</a> &nbsp;&nbsp;<span -->
-<!-- 							class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>, -->
-<!-- 						<a href="#">Fire</a>, <a href="#">Mars</a> -->
+						<span style="float: right" class="glyphicon glyphicon-time"> <?php echo "$postCreationDate"?></span>
+						<!-- 						<span class="glyphicon glyphicon-folder-open"></span> &nbsp;<a -->
+						<!-- 							href="#">Signs</a> &nbsp;&nbsp;<span -->
+						<!-- 							class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>, -->
+						<!-- 						<a href="#">Fire</a>, <a href="#">Mars</a> -->
 					</div>
 				</div>
 
@@ -186,17 +186,25 @@ if (! isset ( $_GET ['post_id'] )) {
 					<h4>Tags</h4>
 				</div>
 				<div class="panel-body">
-					<ul class="list-inline">
-						<li><a href="#">Aries</a></li>
-						<li><a href="#">Fire</a></li>
-						<li><a href="#">Mars</a></li>
-						<li><a href="#">Taurus</a></li>
-						<li><a href="#">Earth</a></li>
-						<li><a href="#">Moon</a></li>
-						<li><a href="#">Gemini</a></li>
-						<li><a href="#">Air</a></li>
-						<li><a href="#">Mercury</a></li>
-						<li><a href="#">Cancer</a></li>
+					    <?php      
+      $query = "SELECT T.TagID tid, T.TAG tag
+			                     FROM Tagsforposts T WHERE T.PostID=" . $postid . ";";
+            
+      $stmt = $db->prepare ( $query );
+      $stmt->execute ();
+      $numrows = $stmt->rowCount ();
+      
+      if ($numrows == 0) {
+         echo "No Tags found";
+         ;
+      } else {
+         echo "<ul class='list-inline'>";         
+         foreach ( $db->query ( $query ) as $row ) {
+            echo "<li><a href='#'>" . $row ['tag'] . "</a></li>";
+         }
+         echo "</ul>";
+      }
+      ?>
 					</ul>
 				</div>
 			</div>
