@@ -114,9 +114,12 @@ if (! isset ( $_GET ['post_id'] )) {
       				<h4 class='pull-left'><a href='./show_user.php?user_id=" . $row ['uid'] . "'>" . $row ['uname'] . "</a></h4>
 					<p class='pull-right'>" . $row ['cdate'] . "</p>
                   </div>
-         		  <p>
-				    <em>" . $row ['ctext'] . "</em>
-					</p>
+                  <div class='panel-heading' style='overflow:
+         hidden; text-overflow: ellipsis; white-space: nowrap;
+         '>
+        <span>" . $row ['ctext'] . "</span>
+                  </div>
+
                </li>";
       }
       ?>			   
@@ -126,14 +129,15 @@ if (! isset ( $_GET ['post_id'] )) {
 			<!-- Comment form -->
 			<div class="well">
 				<h4>Leave a comment</h4>
-				<form role="form" class="clearfix">
+				<form role="form" class="clearfix" method="post" action="add_comment_check.php">
 					<div class="col-md-12 form-group">
 						<label class="sr-only" for="email">Comment</label>
-						<textarea class="form-control" id="comment" placeholder="Comment"></textarea>
+						<textarea class="form-control" id="comment" name="inputComment" placeholder="Comment"></textarea>
 					</div>
 					<div class="col-md-12 form-group text-right">
 						<button type="submit" class="btn btn-primary">Submit</button>
 					</div>
+					<input type="hidden" name="postid" value="<?php echo $postid;?>">
 				</form>
 			</div>
 		</div>
