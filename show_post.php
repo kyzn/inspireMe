@@ -39,6 +39,12 @@ if (! isset ( $_GET ['post_id'] )) {
       ) );
       $numcomments = $stmt->rowCount ();
       
+      $stmt = $db->prepare ( "SELECT * FROM upvotesforposts WHERE PostID=? && IsDeleted=0" );
+      $stmt->execute ( array (
+            $postid 
+      ) );
+      $numofupvotes = $stmt->rowCount ();
+      
       // Let's start drawing the page
       ?>
 <!-- Body -->
@@ -46,14 +52,39 @@ if (! isset ( $_GET ['post_id'] )) {
 	<div class="row">
 		<div class="col-md-8">
 			<article>
+				<form role="form" class="clearfix" method="post"
+					action="change_post_vote_check.php">
+								    <?php
+      $stmt = $db->prepare ( "SELECT * FROM upvotesforposts WHERE PostID=? AND UserID=?" );
+      $stmt->execute ( array (
+            $postid,
+            $userid 
+      ) );
+      
+      $row = $stmt->fetch ( PDO::FETCH_ASSOC );
+      
+      if (! empty ( $row ) && $row ['IsDeleted'] == 0) {
+         echo "<button type='submit' class='btn btn-default btn-lg active'>";
+         echo "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>";
+      } else {
+         echo "<button type='submit' class='btn btn-default btn-lg'>";
+         echo "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>";
+      }
+      echo "Upvote</button>";
+      
+      echo "<input type='hidden' name='postid' value=" . $postid . ">";
+      
+      ?>
+				</form>
 				<h1>
 				     <?php echo "<a href='./show_post.php?post_id=".$postid."'>".$postTitle."</a>"; ?>				     					
 				</h1>
 
 				<div class="row">
 					<div class="col-sm-6 col-md-6">
-						<span class="glyphicon glyphicon-pencil"></span> <a
-							href="show_post.php?post_id=<?php echo "$postid" ?>#comments"><?php echo "$numcomments Comments" ?></a>
+
+						<span class="glyphicon glyphicon-pencil"></span> <a href="#"><?php echo "$numofupvotes Upvotes" ?></a>
+						<a href="show_post.php?post_id=<?php echo "$postid" ?>#comments"><?php echo "$numcomments Comments" ?></a>
 						&nbsp;&nbsp;
 					</div>
 					<div class="col-sm-6 col-md-6">
@@ -109,20 +140,48 @@ if (! isset ( $_GET ['post_id'] )) {
 			   <?php
       $query = "SELECT C.CommentID cid, C.CommentText ctext, C.CreatedOn cdate, U.UserName uname, U.UserID uid
 			FROM Comments C, Users U WHERE C.UserID=U.UserID AND C.PostID=" . $postid . ";";
-      
       foreach ( $db->query ( $query ) as $row ) {
-         echo "<li class='comment'>
-                  <div class='clearfix'>
-      				<h4 class='pull-left'><a href='./show_user.php?user_id=" . $row ['uid'] . "'>" . $row ['uname'] . "</a></h4>
+         $commentid = $row['cid'];
+         
+         echo " <div class='clearfix'>
+      				<h4 class='pull-left'><a href='./show_user.php?user_id=" . $row ['uid'] . "'>" . $row ['uname'] . "</a> says :</h4>
 					<p class='pull-right'>" . $row ['cdate'] . "</p>
                   </div>
-                  <div class='panel-heading' style='overflow:
-         hidden; text-overflow: ellipsis; white-space: nowrap;
-         '>
-        <span>" . $row ['ctext'] . "</span>
-                  </div>
-
-               </li>";
+                  <div class='panel-heading' style='overflow:auto; 
+                                             text-overflow: ellipsis; 
+                                             white-space: text-justify;'>";
+         ?>
+         <form role="form" class="clearfix" method="post"
+					action="change_comment_vote_check.php">
+								    <?php
+         $stmt = $db->prepare ( "SELECT * FROM upvotesforcomments WHERE CommentID=? && IsDeleted=0" );
+         $stmt->execute ( array (
+               $commentid 
+         ) );
+         $numofupvotesforcomment = $stmt->rowCount ();
+         
+         $stmt = $db->prepare ( "SELECT * FROM upvotesforcomments WHERE CommentID=? AND UserID=?" );
+         $stmt->execute ( array (
+               $commentid,
+               $userid 
+         ) );
+         
+         $crow = $stmt->fetch ( PDO::FETCH_ASSOC );
+         
+         if (! empty ( $crow ) && $crow ['IsDeleted'] == 0) {
+            echo "<button type='submit' class='btn btn-default btn-circle active'>";
+            echo "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>";
+         } else {
+            echo "<button type='submit' class='btn btn-default btn-circle'>";
+            echo "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>";
+         }
+         echo $numofupvotesforcomment." Likes</button>";
+         echo "<input type='hidden' name='commentid' value=" . $commentid . ">";
+         echo "<input type='hidden' name='postid' value=" . $postid . ">";
+         ?>
+				</form>         
+         <?php
+         echo "<span>" . $row ['ctext'] . "</span></div>";
       }
       ?>			   
 
@@ -186,10 +245,10 @@ if (! isset ( $_GET ['post_id'] )) {
 					<h4>Tags</h4>
 				</div>
 				<div class="panel-body">
-					    <?php      
+					    <?php
       $query = "SELECT T.TagID tid, T.TAG tag
 			                     FROM Tagsforposts T WHERE T.PostID=" . $postid . ";";
-            
+      
       $stmt = $db->prepare ( $query );
       $stmt->execute ();
       $numrows = $stmt->rowCount ();
@@ -198,7 +257,7 @@ if (! isset ( $_GET ['post_id'] )) {
          echo "No Tags found";
          ;
       } else {
-         echo "<ul class='list-inline'>";         
+         echo "<ul class='list-inline'>";
          foreach ( $db->query ( $query ) as $row ) {
             echo "<li><a href='#'>" . $row ['tag'] . "</a></li>";
          }
