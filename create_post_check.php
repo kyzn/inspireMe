@@ -7,6 +7,13 @@ if(!$loggedin){
 	// email, username and password sent from form
 	$commid=$_SESSION['comm_id'];
 	unset($_SESSION['comm_id']);
+	$followup=$_SESSION['followup'];
+	unset($_SESSION['followup']);
+	if($followup){
+		$ppid=$_SESSION['ppid'];
+		unset($_SESSION['ppid']);
+	}
+
 	$posttitle=$_POST['inputTitle'];
 	$posttext=$_POST['inputPost'];
 	$posttags=$_POST['inputTags'];
@@ -18,9 +25,20 @@ if(!$loggedin){
 			header("location:create_post.php");
 	}else{
 
-		$stmt=$db->prepare("INSERT INTO Posts (PostText,PostTitle,UserID,CommID,CreatedOn) VALUES (?,?,?,?,NOW());");
-		$stmt->execute(array($posttext,$posttitle,$userid,$commid));
+		if($followup){
+			$stmt=$db->prepare("INSERT INTO Posts (PostText,PostTitle,UserID,CommID,CreatedOn,PrevPostID) VALUES (?,?,?,?,NOW(),?);");
+			$stmt->execute(array($posttext,$posttitle,$userid,$commid,$ppid));
+		}else{
+			$stmt=$db->prepare("INSERT INTO Posts (PostText,PostTitle,UserID,CommID,CreatedOn) VALUES (?,?,?,?,NOW());");
+			$stmt->execute(array($posttext,$posttitle,$userid,$commid));
+		}
+		
 		$post_id = $db->lastInsertId();
+
+		if($followup){
+			$stmt=$db->prepare("UPDATE Posts SET NextPostID=? WHERE PostID=?");
+			$stmt->execute(array($post_id,$ppid));
+		}
 
 		#add tags
 		$stmt=$db->prepare("INSERT INTO TagsForPosts (PostID, CreatedOn, Tag) VALUES (?,NOW(),?);");
