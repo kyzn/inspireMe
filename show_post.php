@@ -15,7 +15,7 @@ if (! isset ( $_GET ['post_id'] )) {
    
    $stmt = $db->prepare ( "SELECT P.PostTitle as ptitle, P.PostText as ptext,
    P.CreatedOn as pdate, P.NextPostID as pnext, P.PrevPostID as pprev, U.UserID as uid,
-   U.UserName as uname FROM Posts P, Users U 
+   U.UserName as uname, P.CommID as commid FROM Posts P, Users U 
       WHERE P.PostID=? AND P.UserID=U.UserID" );
    $stmt->execute ( array (
          $postid 
@@ -35,6 +35,7 @@ if (! isset ( $_GET ['post_id'] )) {
       $prevPostId = $row ['pprev'];
       $uid = $row['uid'];
       $uname = $row['uname'];
+      $commid = $row['commid'];
       
       $commId = $row ['CommID'];
       
@@ -125,7 +126,7 @@ if (! isset ( $_GET ['post_id'] )) {
       
       if (empty ( $nextPostId )) {
          if($uid==$userid){
-            echo "<li class='next'><a href='./create_post.php?prev_post_id=" . $postid . "'>Write Follow-up Story!<span aria-hidden='true'>&rarr;</span></a></li>";
+            echo "<li class='next'><a href='./create_post.php?comm_id=".$commid."&prev_post_id=" . $postid . "'>Write Follow-up Story!<span aria-hidden='true'>&rarr;</span></a></li>";
          }else{
             echo "<li class='next disabled'><a href='./show_post.php?post_id=" . $nextPostId . "'>Next<span aria-hidden='true'>&rarr;</span></a></li>";
          }
