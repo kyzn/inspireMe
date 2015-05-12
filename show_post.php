@@ -13,7 +13,10 @@ if (! isset ( $_GET ['post_id'] )) {
 } else {
    $postid = $_GET ['post_id'];
    
-   $stmt = $db->prepare ( "SELECT * FROM posts WHERE PostID=?" );
+   $stmt = $db->prepare ( "SELECT P.PostTitle as ptitle, P.PostText as ptext,
+   P.CreatedOn as pdate, P.NextPostID as pnext, P.PrevPostID as pprev, U.UserID as uid,
+   U.UserName as uname FROM Posts P, Users U 
+      WHERE P.PostID=? AND P.UserID=U.UserID" );
    $stmt->execute ( array (
          $postid 
    ) );
@@ -25,11 +28,13 @@ if (! isset ( $_GET ['post_id'] )) {
    } else {
       $row = $stmt->fetch ( PDO::FETCH_ASSOC );
       
-      $postTitle = $row ['PostTitle'];
-      $postContent = $row ['PostText'];
-      $postCreationDate = $row ['CreatedOn'];
-      $nextPostId = $row ['NextPostID'];
-      $prevPostId = $row ['PrevPostID'];
+      $postTitle = $row ['ptitle'];
+      $postContent = $row ['ptext'];
+      $postCreationDate = $row ['pdate'];
+      $nextPostId = $row ['pnext'];
+      $prevPostId = $row ['pprev'];
+      $uid = $row['uid'];
+      $uname = $row['uname'];
       
       $commId = $row ['CommID'];
       
@@ -83,12 +88,12 @@ if (! isset ( $_GET ['post_id'] )) {
 				<div class="row">
 					<div class="col-sm-6 col-md-6">
 
-						<span class="glyphicon glyphicon-pencil"></span> <a href="#"><?php echo "$numofupvotes Upvotes" ?></a>
+						<span class="glyphicon glyphicon-pencil"></span> <?php echo "$numofupvotes Upvotes" ?>
 						<a href="show_post.php?post_id=<?php echo "$postid" ?>#comments"><?php echo "$numcomments Comments" ?></a>
 						&nbsp;&nbsp;
 					</div>
 					<div class="col-sm-6 col-md-6">
-						<span style="float: right" class="glyphicon glyphicon-time"> <?php echo "$postCreationDate"?></span>
+						<span style="float: right" class="glyphicon glyphicon-time"> <?php echo "$postCreationDate"?> by <a href="./show_user.php?user_id=<?php echo $uid;?>"><?php echo $uname;?></a></span>
 						<!-- 						<span class="glyphicon glyphicon-folder-open"></span> &nbsp;<a -->
 						<!-- 							href="#">Signs</a> &nbsp;&nbsp;<span -->
 						<!-- 							class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>, -->
@@ -119,7 +124,11 @@ if (! isset ( $_GET ['post_id'] )) {
       }
       
       if (empty ( $nextPostId )) {
-         echo "<li class='next disabled'><a href='./show_post.php?post_id=" . $nextPostId . "'>Next<span aria-hidden='true'>&rarr;</span></a></li>";
+         if($uid==$userid){
+            echo "<li class='next'><a href='./create_post.php?prev_post_id=" . $postid . "'>Write Follow-up Story!<span aria-hidden='true'>&rarr;</span></a></li>";
+         }else{
+            echo "<li class='next disabled'><a href='./show_post.php?post_id=" . $nextPostId . "'>Next<span aria-hidden='true'>&rarr;</span></a></li>";
+         }
       } else {
          echo "<li class='next'><a href='./show_post.php?post_id=" . $nextPostId . "'>Next<span aria-hidden='true'>&rarr;</span></a></li>";
       }
