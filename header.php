@@ -55,6 +55,12 @@ if (!empty($_SESSION['UserID'])){
 		<li><a href="./create_community.php">Create Community</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <form method="post" action="search.php" class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" name="inputKeyword" class="form-control" placeholder="Search" required>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
         <li><a href="./show_user.php?user_id=<?php echo $userid;?>"><b><?php echo $username;?></b></a></li>
         <li><a href="./logout.php">Log out</a></li>
 
@@ -62,6 +68,12 @@ if (!empty($_SESSION['UserID'])){
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
+              <form method="post" action="search.php" class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" name="inputKeyword" class="form-control" placeholder="Search" required>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
         <li><a href="./login.php">Login</a></li>
         <li><a href="./register.php">Register</a></li>
 
