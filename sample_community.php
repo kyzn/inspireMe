@@ -67,7 +67,7 @@ if ($numrows == 0) {
    // Handling the buttons (join-joined-request-pending)
    
    if ($admin) {
-      echo "<a href='./show_requests.php?comm_id=" . $commid . "'>Click here to see requests to join</a>";
+      echo "<a href='./show_Requests.php?comm_id=" . $commid . "'>Click here to see Requests to join</a>";
    } else if ($joined) {
       echo "Joined";
    } else if (! $private) {
@@ -80,7 +80,7 @@ if ($numrows == 0) {
    
    echo "</i></p>";
    
-   // Handling the posts
+   // Handling the Posts
    
    if (! (! $joined && $private)) {
       

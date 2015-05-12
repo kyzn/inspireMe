@@ -22,7 +22,7 @@ if (!isset($_GET['comm_id']) || !isset($_GET['user_id'])) {
 	$numrows = $stmt->rowCount();
 
 	if($numrows == 0){ 
-		$_SESSION['AlertRed'] = "You don't have rights to access requests page.";
+		$_SESSION['AlertRed'] = "You don't have rights to access Requests page.";
 		header("location:index.php");
 	}else{
 
@@ -42,7 +42,7 @@ if (!isset($_GET['comm_id']) || !isset($_GET['user_id'])) {
 
 			$db=null;
 			$_SESSION['AlertGreen'] = "Successfully deleted.";
-			header("location:show_requests.php?comm_id=".$commid);		
+			header("location:show_Requests.php?comm_id=".$commid);		
 
 }}}
 

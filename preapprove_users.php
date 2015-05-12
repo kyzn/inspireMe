@@ -37,7 +37,7 @@ if (!isset($_GET['comm_id'])) {
                 ?>
 
                 <div class="container">
-            <form class="form-signin" method="post" action="preapprove_users_check.php">
+            <form class="form-signin" method="post" action="preapprove_Users_check.php">
             <h2 class="form-signin-heading">Preapprove Users</h2>
             <?php
             echo "<p> for <a href=\"./show_community.php?comm_id=$commid\">$cname</a></p>";

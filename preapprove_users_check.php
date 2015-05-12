@@ -54,14 +54,14 @@ if(!$loggedin){
 				$numrows5=$stmt5->rowCount();
 
 				if($numrows5>0){
-					$_SESSION['AlertRed'] .="$mail was preapproved before (and not registered yet).<br>";
+					$_SESSION['AlertRed'] .="$mail was PreApproved before (and not registered yet).<br>";
 				}else{
 
-				#add address to preapproveds
+				#add address to PreApproveds
 				$stmt6 = $db->prepare("INSERT INTO PreApproved (CommID,AddedOn,Email) VALUES (?,NOW(),?);");
 				$stmt6->execute(array($commid,$mail));
 
-				$_SESSION['AlertGreen'] .="$mail is not registered to inspireMe yet, but we preapproved him/her just in case he/she changes his/her mind..<br>";
+				$_SESSION['AlertGreen'] .="$mail is not registered to inspireMe yet, but we PreApproved him/her just in case he/she changes his/her mind..<br>";
 
 			}}}}}
 		

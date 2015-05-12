@@ -9,7 +9,7 @@ if (! $loggedin) {
    $postid = $_POST ['postid'];
    // $userid is given
    
-   $stmt = $db->prepare ( "SELECT * FROM upvotesforposts WHERE PostID=? AND UserID=?" );
+   $stmt = $db->prepare ( "SELECT * FROM UpvotesForPosts WHERE PostID=? AND UserID=?" );
    $stmt->execute ( array (
          $postid,
          $userid 
@@ -19,7 +19,7 @@ if (! $loggedin) {
    
    if (empty ( $row )) {
       // add new
-      $stmt = $db->prepare ( "INSERT INTO upvotesforposts (PostID,UserID,CreatedOn,IsDeleted) VALUES (?,?,NOW(),0);" );
+      $stmt = $db->prepare ( "INSERT INTO UpvotesForPosts (PostID,UserID,CreatedOn,IsDeleted) VALUES (?,?,NOW(),0);" );
       $stmt->execute ( array (
             $postid,
             $userid
@@ -29,7 +29,7 @@ if (! $loggedin) {
       
       if($isdeleted == 1)
       {
-         $stmt = $db->prepare ( "UPDATE upvotesforposts SET IsDeleted=0 WHERE PostID=? AND UserID=?" );
+         $stmt = $db->prepare ( "UPDATE UpvotesForPosts SET IsDeleted=0 WHERE PostID=? AND UserID=?" );
          $stmt->execute ( array (
                $postid,
                $userid
@@ -37,7 +37,7 @@ if (! $loggedin) {
       }
       else
       {
-         $stmt = $db->prepare ( "UPDATE upvotesforposts SET IsDeleted=1 WHERE PostID=? AND UserID=?" );
+         $stmt = $db->prepare ( "UPDATE UpvotesForPosts SET IsDeleted=1 WHERE PostID=? AND UserID=?" );
          $stmt->execute ( array (
                $postid,
                $userid

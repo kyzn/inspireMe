@@ -46,7 +46,7 @@ if($loggedin){
 			$stmt->execute(array($RegEmail,$RegUserName,$RegPass,$RegFullName,$RegBirthYear,$RegOccupation));
 			$user_id = $db->lastInsertId();
 
-			#check if user has any preapproved groups, add if any
+			#check if user has any PreApproved groups, add if any
 			$preapp_query=$db->prepare("SELECT * FROM PreApproved WHERE Email=?");
 			$preapp_query->execute(array($RegEmail));
 

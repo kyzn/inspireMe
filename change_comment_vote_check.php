@@ -9,7 +9,7 @@ if (! $loggedin) {
    $postid = $_POST ['postid'];
    // $userid is given
    
-   $stmt = $db->prepare ( "SELECT * FROM upvotesforcomments WHERE CommentID=? AND UserID=?" );
+   $stmt = $db->prepare ( "SELECT * FROM UpvotesForComments WHERE CommentID=? AND UserID=?" );
    $stmt->execute ( array (
          $commentid,
          $userid 
@@ -19,7 +19,7 @@ if (! $loggedin) {
    
    if (empty ( $row )) {
       // add new
-      $stmt = $db->prepare ( "INSERT INTO upvotesforcomments (CommentID,UserID,CreatedOn,IsDeleted) VALUES (?,?,NOW(),0);" );
+      $stmt = $db->prepare ( "INSERT INTO UpvotesForComments (CommentID,UserID,CreatedOn,IsDeleted) VALUES (?,?,NOW(),0);" );
       $stmt->execute ( array (
             $commentid,
             $userid
@@ -29,7 +29,7 @@ if (! $loggedin) {
       
       if($isdeleted == 1)
       {
-         $stmt = $db->prepare ( "UPDATE upvotesforcomments SET IsDeleted=0 WHERE CommentID=? AND UserID=?" );
+         $stmt = $db->prepare ( "UPDATE UpvotesForComments SET IsDeleted=0 WHERE CommentID=? AND UserID=?" );
          $stmt->execute ( array (
                $commentid,
                $userid
@@ -37,7 +37,7 @@ if (! $loggedin) {
       }
       else
       {
-         $stmt = $db->prepare ( "UPDATE upvotesforcomments SET IsDeleted=1 WHERE CommentID=? AND UserID=?" );
+         $stmt = $db->prepare ( "UPDATE UpvotesForComments SET IsDeleted=1 WHERE CommentID=? AND UserID=?" );
          $stmt->execute ( array (
                $commentid,
                $userid
@@ -48,6 +48,6 @@ if (! $loggedin) {
    $db = null; // close connection
    
    // $_SESSION['AlertGreen'] = "Successfully upvoted post!!";
-   header ( "location:show_post.php?post_id=" . $postid."#comments" );
+   header ( "location:show_post.php?post_id=" . $postid."#Comments" );
 }
 ?>

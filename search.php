@@ -11,7 +11,7 @@ if (isset($_GET['keyword'])) {
 
 #now we have the keyword. (it works in two ways. 1: call search.php?keyword=abcd directly. 2: fill the form at the header)
 
-#places we will look for logged in users
+#places we will look for logged in Users
 #1 Comms.CommName + Comms.ShortDesc
 #2 TagsForComms.Tag
 #3 Users.UserName + Users.FullName
@@ -21,7 +21,7 @@ if (isset($_GET['keyword'])) {
 #6 Comments.CommentText
 
 #guest will be able to search through 1,2,3
-#users will be able to search through 4,5,6 if community is public or private and joined
+#Users will be able to search through 4,5,6 if community is public or private and joined
   
 
 #start drawing table

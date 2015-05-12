@@ -5,7 +5,7 @@
 	<div class="jumbotron">
 		<h1>inspireMe</h1>
 		<p>inspireMe is a crowd-sourced script writing platform. You can
-			create new posts of your stories or contribute to already existing
+			create new Posts of your stories or contribute to already existing
 			ones, bring your talent to the community and take part in a infinite
 			experience!</p>
     

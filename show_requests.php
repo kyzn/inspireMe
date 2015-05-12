@@ -11,7 +11,7 @@ if (!isset($_GET['comm_id'])) {
 }else{
     $commid=$_GET['comm_id'];
     //Now we have the community, we need to check whether user is admin of it.
-    //And also community has to be private (so that people can send requests to it)
+    //And also community has to be private (so that people can send Requests to it)
 	
     $stmt=$db->prepare("SELECT C.CommName as cname FROM UsersInComms UC, Comms C WHERE UC.UserID=? AND 
     	UC.CommID=? AND UC.CommID=C.CommID AND C.Privacy='Private' AND UC.Role='admin';");
@@ -19,7 +19,7 @@ if (!isset($_GET['comm_id'])) {
 	$numrows = $stmt->rowCount();
 
 	if($numrows == 0){ 
-		$_SESSION['AlertRed'] = "You don't have rights to access requests page.";
+		$_SESSION['AlertRed'] = "You don't have rights to access Requests page.";
 		header("location:index.php");
 	}else{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -51,8 +51,8 @@ foreach($db->query($query) as $row){
 	echo"<tr>
 	<td><a href='./show_user.php?user_id=".$row['uid']."'>".$row['uname']."</a></td>
 	<td>".$row['date']."</td>
-	<td><a href='./show_requests_approve.php?user_id=".$row['uid']."&comm_id=".$commid."'>Approve</a></td>
-	<td><a href='./show_requests_delete.php?user_id=".$row['uid']."&comm_id=".$commid."'>Delete</a></td>
+	<td><a href='./show_Requests_approve.php?user_id=".$row['uid']."&comm_id=".$commid."'>Approve</a></td>
+	<td><a href='./show_Requests_delete.php?user_id=".$row['uid']."&comm_id=".$commid."'>Delete</a></td>
 	</tr>";
 }
 

@@ -39,13 +39,13 @@ if (! isset ( $_GET ['post_id'] )) {
       
       $commId = $row ['CommID'];
       
-      $stmt = $db->prepare ( "SELECT * FROM comments WHERE PostID=?" );
+      $stmt = $db->prepare ( "SELECT * FROM Comments WHERE PostID=?" );
       $stmt->execute ( array (
             $postid 
       ) );
-      $numcomments = $stmt->rowCount ();
+      $numComments = $stmt->rowCount ();
       
-      $stmt = $db->prepare ( "SELECT * FROM upvotesforposts WHERE PostID=? && IsDeleted=0" );
+      $stmt = $db->prepare ( "SELECT * FROM UpvotesForPosts WHERE PostID=? && IsDeleted=0" );
       $stmt->execute ( array (
             $postid 
       ) );
@@ -61,7 +61,7 @@ if (! isset ( $_GET ['post_id'] )) {
 				<form role="form" class="clearfix" method="post"
 					action="change_post_vote_check.php">
 								    <?php
-      $stmt = $db->prepare ( "SELECT * FROM upvotesforposts WHERE PostID=? AND UserID=?" );
+      $stmt = $db->prepare ( "SELECT * FROM UpvotesForPosts WHERE PostID=? AND UserID=?" );
       $stmt->execute ( array (
             $postid,
             $userid 
@@ -90,7 +90,7 @@ if (! isset ( $_GET ['post_id'] )) {
 					<div class="col-sm-6 col-md-6">
 
 						<span class="glyphicon glyphicon-pencil"></span> <?php echo "$numofupvotes Upvotes" ?>
-						<a href="show_post.php?post_id=<?php echo "$postid" ?>#comments"><?php echo "$numcomments Comments" ?></a>
+						<a href="show_post.php?post_id=<?php echo "$postid" ?>#Comments"><?php echo "$numComments Comments" ?></a>
 						&nbsp;&nbsp;
 					</div>
 					<div class="col-sm-6 col-md-6">
@@ -145,7 +145,7 @@ if (! isset ( $_GET ['post_id'] )) {
 
 			<hr />
 
-			<ul id="comments" class="comments">
+			<ul id="Comments" class="Comments">
 			   
 			   <?php
       $query = "SELECT C.CommentID cid, C.CommentText ctext, C.CreatedOn cdate, U.UserName uname, U.UserID uid
@@ -164,13 +164,13 @@ if (! isset ( $_GET ['post_id'] )) {
          <form role="form" class="clearfix" method="post"
 					action="change_comment_vote_check.php">
 								    <?php
-         $stmt = $db->prepare ( "SELECT * FROM upvotesforcomments WHERE CommentID=? && IsDeleted=0" );
+         $stmt = $db->prepare ( "SELECT * FROM UpvotesForComments WHERE CommentID=? && IsDeleted=0" );
          $stmt->execute ( array (
                $commentid 
          ) );
          $numofupvotesforcomment = $stmt->rowCount ();
          
-         $stmt = $db->prepare ( "SELECT * FROM upvotesforcomments WHERE CommentID=? AND UserID=?" );
+         $stmt = $db->prepare ( "SELECT * FROM UpvotesForComments WHERE CommentID=? AND UserID=?" );
          $stmt->execute ( array (
                $commentid,
                $userid 
@@ -223,7 +223,7 @@ if (! isset ( $_GET ['post_id'] )) {
 				</div>
 				<ul class="list-group">
 				  <?php 
-				  $query = "SELECT * FROM posts WHERE CommID=" . $commId . " ORDER BY CreatedOn DESC LIMIT 5;";
+				  $query = "SELECT * FROM Posts WHERE CommID=" . $commId . " ORDER BY CreatedOn DESC LIMIT 5;";
 				  foreach ( $db->query ( $query ) as $row ) {
 				     echo "<li class='list-group-item'><a href='./show_post.php?post_id=".$row['PostID']."'>";
 				     echo $row['PostTitle'];
@@ -255,7 +255,7 @@ if (! isset ( $_GET ['post_id'] )) {
 				<div class="panel-body">
 					    <?php
       $query = "SELECT T.TagID tid, T.TAG tag
-			                     FROM Tagsforposts T WHERE T.PostID=" . $postid . ";";
+			                     FROM TagsForPosts T WHERE T.PostID=" . $postid . ";";
       
       $stmt = $db->prepare ( $query );
       $stmt->execute ();

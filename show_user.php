@@ -16,7 +16,7 @@ else
    $userid = $_GET ['user_id'];
 }
 
-$stmt = $db->prepare ( "SELECT * FROM users WHERE UserID=?" );
+$stmt = $db->prepare ( "SELECT * FROM Users WHERE UserID=?" );
 $stmt->execute ( array (
       $userid 
 ) );
@@ -33,29 +33,29 @@ if ($numrows == 0) {
    $userName = $row ['UserName'];
    $regDate = $row ['RegDate'];
    
-   // total num of posts
-   $stmt = $db->prepare ( "SELECT * FROM posts WHERE UserID=?" );
+   // total num of Posts
+   $stmt = $db->prepare ( "SELECT * FROM Posts WHERE UserID=?" );
    $stmt->execute ( array (
          $displayedUserID 
    ) );
-   $totalnumofposts = $stmt->rowCount ();
+   $totalnumofPosts = $stmt->rowCount ();
    
-   // total num of comments
-   $stmt = $db->prepare ( "SELECT * FROM comments WHERE UserID=?" );
+   // total num of Comments
+   $stmt = $db->prepare ( "SELECT * FROM Comments WHERE UserID=?" );
    $stmt->execute ( array (
          $displayedUserID 
    ) );
-   $totalnumofcomments = $stmt->rowCount ();
+   $totalnumofComments = $stmt->rowCount ();
    
    // total num of upvotes
-   $stmt = $db->prepare ( "SELECT * FROM upvotesforposts WHERE UserID=?" );
+   $stmt = $db->prepare ( "SELECT * FROM UpvotesForPosts WHERE UserID=?" );
    $stmt->execute ( array (
          $displayedUserID 
    ) );
    $totalnumofupvotes = $stmt->rowCount ();
    
    // total num of likes
-   $stmt = $db->prepare ( "SELECT * FROM upvotesforcomments WHERE UserID=?" );
+   $stmt = $db->prepare ( "SELECT * FROM UpvotesForComments WHERE UserID=?" );
    $stmt->execute ( array (
          $displayedUserID 
    ) );
@@ -111,7 +111,7 @@ if ($numrows == 0) {
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span>
 					<?php echo $totalnumoflikes ?></li>
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Comments</strong></span>
-					<?php echo $totalnumofcomments ?></li>
+					<?php echo $totalnumofComments ?></li>
 				<!-- 				<li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> -->
 				<!-- 					78</li> -->
 			</ul>
@@ -121,7 +121,7 @@ if ($numrows == 0) {
 				<div class="panel-body">
 				  <?php
    $query = "SELECT C.CommID cid, C.CommName cname
-      FROM Comms C, Usersincomms U WHERE C.CommID=U.CommID AND U.UserID=" . $userid . ";";
+      FROM Comms C, UsersInComms U WHERE C.CommID=U.CommID AND U.UserID=" . $userid . ";";
    
    foreach ( $db->query ( $query ) as $row ) {
       echo "<p>
@@ -172,7 +172,7 @@ if ($numrows == 0) {
       		<table class='table table-striped'>
         	<thead>
           	<tr>
-            <th>Posts ($totalnumofposts)</th>
+            <th>Posts ($totalnumofPosts)</th>
             <th>Date</th>
           	</tr>
         	</thead>
@@ -214,7 +214,7 @@ if ($numrows == 0) {
    foreach ( $db->query ( $query ) as $row ) {
       echo "<tr><td><i class='pull-right fa fa-edit'></i>";
       echo $row ['cdate'] . " - Commented on the post 
-                                      <a href='./show_post.php?post_id=" . $row ['pid'] . "#comments'>" . $row ['ptitle'] . "</a>";
+                                      <a href='./show_post.php?post_id=" . $row ['pid'] . "#Comments'>" . $row ['ptitle'] . "</a>";
       echo "</td></tr>";
    }
    ?>
@@ -229,7 +229,7 @@ if ($numrows == 0) {
       if ($row ['uid'] != $userid) {
          echo "<tr><td><i class='pull-right fa fa-edit'></i>";
          echo $row ['cdate'] . " - " . $row ['uname'] . " commented on your post
-                                      <a href='./show_post.php?post_id=" . $row ['pid'] . "#comments'>" . $row ['ptitle'] . "</a>";
+                                      <a href='./show_post.php?post_id=" . $row ['pid'] . "#Comments'>" . $row ['ptitle'] . "</a>";
          echo "</td></tr>";
       }
    }
@@ -237,7 +237,7 @@ if ($numrows == 0) {
 
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, UP.CreatedOn udate
-			                                   FROM Posts P, Upvotesforposts UP
+			                                   FROM Posts P, UpvotesForPosts UP
                                                WHERE UP.UserID=" . $userid . " AND P.PostID=UP.PostID AND UP.IsDeleted=0
                                                ORDER BY UP.CreatedOn DESC LIMIT 10;";
    
@@ -251,7 +251,7 @@ if ($numrows == 0) {
 					
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, UP.CreatedOn cdate, U.UserID uid, U.UserName uname
-			                                    FROM Posts P, Users U, Upvotesforposts UP
+			                                    FROM Posts P, Users U, UpvotesForPosts UP
                                                 WHERE P.UserID=" . $userid . " AND P.PostID=UP.PostID AND U.UserID=UP.UserID
                                                 ORDER BY UP.CreatedOn DESC LIMIT 10;";
    
@@ -265,14 +265,14 @@ if ($numrows == 0) {
 						
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, UC.CreatedOn udate
-			                                   FROM Posts P, Upvotesforcomments UC, Comments C
+			                                   FROM Posts P, UpvotesForComments UC, Comments C
                                                WHERE UC.UserID=" . $userid . " AND P.PostID=C.PostID AND UC.CommentID=C.CommentID AND UC.IsDeleted=0
                                                ORDER BY UC.CreatedOn DESC LIMIT 10;";
    
    foreach ( $db->query ( $query ) as $row ) {
       echo "<tr><td><i class='pull-right fa fa-edit'></i>";
       echo $row ['udate'] . " - Liked the comment in the post 
-              <a href='./show_post.php?post_id=" . $row ['pid'] . "#comments'>" . $row ['ptitle'] . "</a>";
+              <a href='./show_post.php?post_id=" . $row ['pid'] . "#Comments'>" . $row ['ptitle'] . "</a>";
       echo "</td></tr>";
    }
    ?>
@@ -280,14 +280,14 @@ if ($numrows == 0) {
 
                            <?php
    $query = "SELECT P.PostID pid, P.PostTitle ptitle, UC.CreatedOn cdate, U.UserID uid, U.UserName uname
-			                                    FROM Posts P, Users U, Upvotesforcomments UC, Comments C
+			                                    FROM Posts P, Users U, UpvotesForComments UC, Comments C
                                                 WHERE C.UserID=" . $userid . " AND UC.CommentID=C.CommentID AND U.UserID=UC.UserID AND P.PostID=C.PostID
 				                                ORDER BY UC.CreatedOn DESC";
    
    foreach ( $db->query ( $query ) as $row ) {
       echo "<tr><td><i class='pull-right fa fa-edit'></i>";
       echo $row ['cdate'] . " - " . $row ['uname'] . " liked your comment in the post 
-              <a href='./show_post.php?post_id=" . $row ['pid'] . "#comments'>" . $row ['ptitle'] . "</a>";
+              <a href='./show_post.php?post_id=" . $row ['pid'] . "#Comments'>" . $row ['ptitle'] . "</a>";
       echo "</td></tr>";
    }
    ?>
